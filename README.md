@@ -1,5 +1,8 @@
-# Tugas Individu 1 APAP
-## Authors
-* **Azzahra Putri Ramadhanty** - *1706025125* - *B*
+# Tugas 1 - APAP
 
-checkpoint
+# SIPAS
+repo tugas individu 1 SIPAS
+https://github.com/azzahrapr/tugas-individu-1.git
+
+## Contributor
+Azzahra Putri R - 1706025125
