@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymelaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+</body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid" style='margin-top:60px; text-align: center;'>
+    <h2>Sistem Informasi Pasien</h2>
+    <button class="btn btn-primary" style="margin: 10px">
+        <a th:href="@{/pasien/add}" style="color: white">Tambah Pasien Baru</a>
+    </button>
+</div>
+<div class="jumbotron">
+    <h2 style="margin-top: 20px;">Daftar Pasien</h2>
+    <hr>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col" style="text-align: center">No.</th>
+            <th scope="col" style="text-align: center">Nama</th>
+            <th scope="col" style="text-align: center">NIK</th>
+            <th scope="col" style="text-align: center">Jenis Kelamin</th>
+            <th scope="col" style="text-align: center">Kode Pasien</th>
+            <th scope="col" style="text-align: center">Tempat Lahir</th>
+            <th scope="col" style="text-align: center">Tanggal Lahir</th>
+            <th scope="col" style="text-align: center">Telepon Emergency Contact</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pasien, iterationStatus : ${listPasien}">
+            <th scope="row" th:text="${iterationStatus.count}"></th>
+            <td th:text="${pasien.nama}" style="text-align: center"></td>
+            <td th:text="${pasien.nik}" style="text-align: center"></td>
+            <td th:text="${pasien.getJenisKelamin()}" style="text-align: center"></td>
+            <td th:text="${pasien.kode}" style="text-align: center"></td>
+            <td th:text="${pasien.tempat_lahir}" style="text-align: center"></td>
+            <td th:text="${#dates.format(new java.util.Date(pasien.getTglLahir()), 'yyyy-MM-dd')}" style="text-align: center"></td>
+            <td th:text="${pasien.getIdEmergencyContact().getNoHp()}" style="text-align: center"></td>
+            <td scope="col" style="text-align: left">
+                <button class="btn btn-dark">
+                    <a th:href="@{/}" style="color: white"> Tambah Diagnosis </a>
+                </button>
+            </td>
+            <td scope="col" style="text-align: left">
+                <button class="btn btn-info">
+                    <a th:href="@{#}" style="color: white"> Lihat </a>
+                </button>
+            </td>
+            <td scope="col" style="text-align: left">
+                <button class="btn btn-dark">
+                    <a th:href="@{#}" style="color: white"> Ubah </a>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-danger">
+                    <a th:href="@{#}" style="color: white"> Hapus </a>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</html>
