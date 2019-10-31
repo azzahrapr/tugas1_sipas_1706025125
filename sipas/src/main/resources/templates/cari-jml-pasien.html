@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cari Jumlah Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<style>
+
+    .form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .formDiagnosis{
+        display: flex;
+        flex-direction: row;
+        padding-bottom: 1rem;
+
+    }
+
+    .jumlah {
+        width: 80rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-right: 2rem;
+    }
+
+    .formJumlah{
+        width: 80rem;
+        padding-top: 2rem;
+    }
+
+    .title{
+        display: flex;
+        justify-content: center;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+
+</style>
+
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+
+<div class="formJumlah mx-auto">
+    <div class="form">
+        <h4 align="left" style="margin-top: 60px">Masukan Diagnosis</h4>
+        <form th:action="@{/pasien/cari/lakilaki-perempuan}">
+            <div class="formDiagnosis mx-auto">
+                <select class="form-control" th:name="idDiagnosis" style="width: 20rem; padding-right: 0.5rem">
+                    <option th:each="diagnosis: ${listDiagnosis}" th:text="${diagnosis.nama}" th:value="${diagnosis.id}" selected></option>
+                </select>
+                <button type="submit" class="btn btn-primary">Cari Pasien</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<h4 class="title">Pasien pada Diagnosis <span style="padding-left: 0.25rem" th:text="${diagnosisPenyakit.nama}"></span></h4>
+<div class="jumlah mx-auto">
+    <div class="card">
+        <div class="card-header">Jumlah Pasien Laki laki</div>
+        <div class="card-body" th:text="${jmlLaki}"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Jumlah Pasien Perempuan</div>
+        <div class="card-body" th:text="${jmlPerempuan}"></div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

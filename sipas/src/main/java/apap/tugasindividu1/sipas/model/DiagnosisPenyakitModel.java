@@ -11,8 +11,6 @@ import java.util.List;
 public class DiagnosisPenyakitModel implements Serializable {
 
     @Id
-    @NotNull
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -27,7 +25,7 @@ public class DiagnosisPenyakitModel implements Serializable {
     private String kode;
 
     @OneToMany(mappedBy = "diagnosisPenyakitModel")
-    private List<PasienDiagnosisModel> registrasi;
+    private List<PasienDiagnosisModel> pasienDiagnosisPenyakitList;
 
     public Long getId() {
         return id;
@@ -53,11 +51,11 @@ public class DiagnosisPenyakitModel implements Serializable {
         this.kode = kode;
     }
 
-    public List<PasienDiagnosisModel> getRegistrasi() {
-        return registrasi;
+    public List<PasienDiagnosisModel> getPasienDiagnosisPenyakitList() {
+        return pasienDiagnosisPenyakitList;
     }
 
-    public void setRegistrasi(List<PasienDiagnosisModel> registrasi) {
-        this.registrasi = registrasi;
+    public void setPasienDiagnosisPenyakitList(List<PasienDiagnosisModel> pasienDiagnosisPenyakitList) {
+        this.pasienDiagnosisPenyakitList = pasienDiagnosisPenyakitList;
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymelaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -32,33 +32,28 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="pasien, iterationStatus : ${listPasien}">
-            <th scope="row" th:text="${iterationStatus.count}"></th>
+        <tr th:each="pasien, rowStat : ${listPasien}">
+            <th scope="row" th:text="${rowStat.count}"></th>
             <td th:text="${pasien.nama}" style="text-align: center"></td>
             <td th:text="${pasien.nik}" style="text-align: center"></td>
-            <td th:text="${pasien.getJenisKelamin()}" style="text-align: center"></td>
+            <td th:text="${pasien.jenisKelamin} == 1 ? 'Laki-laki' : 'Perempuan'" style="text-align: center"></td>
             <td th:text="${pasien.kode}" style="text-align: center"></td>
             <td th:text="${pasien.tempat_lahir}" style="text-align: center"></td>
-            <td th:text="${#dates.format(new java.util.Date(pasien.getTglLahir()), 'yyyy-MM-dd')}" style="text-align: center"></td>
-            <td th:text="${pasien.getIdEmergencyContact().getNoHp()}" style="text-align: center"></td>
+            <td th:text="${pasien.tgl_lahir}" style="text-align: center"></td>
+            <td th:text="${pasien.getId_emergency_contact().getNo_hp()}" style="text-align: center"></td>
             <td scope="col" style="text-align: left">
                 <button class="btn btn-dark">
-                    <a th:href="@{/}" style="color: white"> Tambah Diagnosis </a>
+                    <a th:href="@{'/pasien/' + ${pasien.nik} + '/tambah-diagnosis'}" style="color: white"> Tambah Diagnosis </a>
                 </button>
             </td>
             <td scope="col" style="text-align: left">
                 <button class="btn btn-info">
-                    <a th:href="@{#}" style="color: white"> Lihat </a>
+                    <a th:href="@{/pasien(nik=${pasien.nik})}" style="color: white"> Lihat </a>
                 </button>
             </td>
             <td scope="col" style="text-align: left">
                 <button class="btn btn-dark">
-                    <a th:href="@{#}" style="color: white"> Ubah </a>
-                </button>
-            </td>
-            <td>
-                <button class="btn btn-danger">
-                    <a th:href="@{#}" style="color: white"> Hapus </a>
+                    <a th:href="@{'/pasien/ubah/' + ${pasien.nik}}" style="color: white"> Ubah </a>
                 </button>
             </td>
         </tr>

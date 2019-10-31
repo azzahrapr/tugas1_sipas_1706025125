@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Diagnosis Penyakit</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid" style='margin-top:60px; text-align: center;'>
+    <h2>Sistem Informasi Pasien</h2>
+</div>
+
+<div class="container-fluid">
+    <button class="btn btn-primary" style="margin: 10px">
+        <a th:href="@{/diagnosis-penyakit/tambah}" style="color: white">Tambah Diagnosis Penyakit Baru</a>
+    </button>
+    <table class="table">
+
+        <thead class="thead-dark">
+        <tr>
+            <th colspan="6">Daftar Diagnosis Penyakit</th>
+        </tr>
+        </thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Nama</th>
+            <th scope="col">Kode</th>
+            <!--<th scope="col">Jumlah Pasien Terdiagnosis</th>-->
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        <tbody>
+
+            <tr th:each="diagnosis, iterationStatus: ${listDiagnosis}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${diagnosis.nama}"></td>
+                <td th:text="${diagnosis.kode}"></td>
+                <!--<td>ini belom aaaa</td>-->
+                <td>
+                    <button class="btn btn-primary">
+                        <a style="color: white" th:href="@{/diagnosis-penyakit(idDiagnosis=${diagnosis.id})}">
+                            Lihat
+                        </a>
+                    </button>
+                </td>
+                    <!--<input type="hidden" name="id" th:value="${diagnosisPenyakit.id}">-->
+                    <!--<input type="hidden" name="nama" th:value="${diagnosisPenyakit.nama}">-->
+                <td>
+                    <form th:action="@{/diagnosis-penyakit/hapus/{idDiagnosis}(idDiagnosis=${diagnosis.id})}" method="POST">
+                        <button class="btn btn-danger" type="submit">
+                            Hapus
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

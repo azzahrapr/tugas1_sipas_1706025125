@@ -1,69 +1,82 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymelaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Restoran</title>
+    <title>Tambah Pasien</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
-<h3>Tambah Pasien</h3>
-<form th:action="@{/pasien/add}" th:object="${pasien}" method="POST" style="margin-top: 40px">
-    <h5 for="nama" >Nama</h5>
-    <p>
-        <input class="form-control col-sm-6" type="text" name="nama" th:field="*{nama}" required = "true"></input>
-    </p>
+<div class="col-md-6">
+    <h3 style="margin-top: 60px">Tambah Pasien</h3>
+    <hr>
+    <form th:action="@{/pasien/add}" method="POST" th:object="${pasien}">
 
-    <h5 for="jenis_kelamin" >Jenis Kelamin</h5>
-    <select class="form-control col-sm-6" name="jenis_kelamin" th:value="*{getJenisKelamin()}" required = "true">
+        <div class="form-group">
+        <label>Nama</label>
+        <input class="form-control" type="text" name="nama" th:field="*{nama}" required = "true"/>
+        </div>
+
+        <div class="form-group">
+        <label>Jenis Kelamin</label>
+        <select class="form-control" name="jenisKelamin" th:value="*{jenisKelamin}" required = "true">
             <option selected="true" disabled="disabled" th:value="''"></option>
-            <option>Laki-laki</option>
-            <option>Perempuan</option>
+            <option th:value="'1'">Laki-laki</option>
+            <option th:value="'2'">Perempuan</option>
         </select>
-    <br>
+        </div>
 
-    <h5 for="tgl_lahir" >Tanggal Lahir</h5>
-    <input class="form-control col-sm-6" type="date" pattern="dd-MM-yy" name="tgl_lahir" th:field="*{getTglLahir()}" required = "true"></input>
-    <br>
+        <div class="form-group">
+        <label>Tanggal Lahir</label>
+        <input class="form-control" type="date" th:field="*{tgl_lahir}" required = "true"/>
+        <br>
+        </div>
 
-    <h5 for="tempat_lahir" >Tempat Lahir</h5>
-    <input class="form-control col-sm-6" type="text" name="tempat_lahir" th:field="*{tempat_lahir}" required = "true"></input>
-    <br>
+        <div class="form-group">
+        <label>Tempat Lahir</label>
+        <input class="form-control" type="text" name="tempat_lahir" th:field="*{tempat_lahir}" required = "true"/>
+        </div>
 
-    <h5 for="nik" >NIK</h5>
-    <input class="form-control col-sm-6" type="text" name="nik" th:field="*{nik}" required = "true"></input>
-    <br>
+        <div class="form-group">
+        <label>NIK</label>
+        <input class="form-control" type="text" name="nik" th:field="*{nik}" required = "true"/>
+        </div>
 
-    <!--<h5 for="asuransi" >Asuransi</h5>-->
-    <!--<p>-->
-        <!--<select class="form-control col-sm-6" name="asuransi" th:value="${pasien.listPasienAsuransi}" required = "true">-->
-            <!--<option th:value="'${rowStat.index}'" selected></option>-->
-            <!--<option th:each="asuransi : ${listAsuransi}" th:value="${asuransi.nama}" th:text="${asuransi.nama}"></option>-->
-        <!--</select>-->
-    <!--</p>-->
-    <!--<div>-->
-        <!--<button class="btn btn-dark" name="action" style="margin-top:10px" type="submit">Tambah Asuransi</button>-->
-    <!--</div>-->
+        <div class="form-group" th:each="asuransi, iterationStatus : *{listAsuransi}">
+        <label>Asuransi</label>
+            <tr>
+                <select class="form-control" id="asuransi" name="asuransi" th:field="*{listAsuransi[__${iterationStatus.index}__]}" required = "true">
+                    <option th:value="${iterationStatus.index}">-- Pilih Asuransi --</option>
+                    <option th:each="itAsuransi : ${listAsuransi}" th:value="${{itAsuransi}}" th:text="${itAsuransi.nama}"></option>
+                </select>
+                <div>
+                    <button class="btn btn-dark" style="margin-top:10px" type="submit" name="addRow">Tambah Asuransi</button>
+                </div>
 
+            </tr>
+        </div>
 
-    <h5 for="nama_kontak" style="margin-top: 20px;">Emergency Contact Name</h5>
-    <input class="form-control col-sm-6" type="text" name="nama_kontak" th:field="*{kontak.nama}" required = "true"></input>
-    <br>
+        <div class="form-group">
+        <label style="margin-top: 20px;">Emergency Contact Name</label>
+        <input class="form-control" type="text" name="nama_contact" th:field="*{id_emergency_contact.nama_contact}" required = "true"/>
+        </div>
 
+        <div class="form-group">
+        <label>Emergency Contact NIK</label>
+        <input class="form-control" type="text" name="nik_contact" th:field="*{id_emergency_contact.nik_contact}" required = "true"/>
+        </div>
 
-    <h5 for="nik" >Emergency Contact NIK</h5>
-    <input class="form-control col-sm-6" type="text" name="nik" th:field="*{kontak.nik}" required = "true"></input>
-    <br>
+        <div class="form-group">
+            <label>Emergency Contact Phone</label>
+        <input class="form-control" type="text" name="no_hp" th:field="*{id_emergency_contact.no_hp}" required = "true"/>
+        </div>
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
 
+    </form>
+</div>
 
-    <h5 for="no_hp" >Emergency Contact Phone</h5>
-    <input class="form-control col-sm-6" type="text" name="no_hp" th:field="*{kontak.no_hp}" required = "true"></input>
-    <br>
-
-    <br>
-    <button class="btn btn-primary" type="submit">Submit</button>
-</form>
-<br>
+</div>
 </body>
 </html>
