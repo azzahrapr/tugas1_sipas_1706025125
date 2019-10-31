@@ -13,5 +13,4 @@ import java.util.Optional;
 @Repository
 public interface AsuransiDB extends JpaRepository<AsuransiModel, Long> {
     Optional<AsuransiModel> findById(Long id);
-    List<PasienModel> findByPasienList(PasienModel pasienModel);
 }

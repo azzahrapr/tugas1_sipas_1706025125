@@ -1,6 +1,5 @@
 package apap.tugasindividu1.sipas.service;
 
-import apap.tugasindividu1.sipas.model.AsuransiModel;
 import apap.tugasindividu1.sipas.model.DiagnosisPenyakitModel;
 import apap.tugasindividu1.sipas.model.PasienDiagnosisModel;
 import apap.tugasindividu1.sipas.repository.PasienDiagnosisDB;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PasienDiagnosisServiceImpl implements PasienDiagnosisService {
@@ -31,10 +29,10 @@ public class PasienDiagnosisServiceImpl implements PasienDiagnosisService {
         return pasienDiagnosisDB.findPasienDiagnosisModelByDiagnosisPenyakitModel(diagnosisPenyakitModel);
     }
 
-    @Override
-    public List<PasienDiagnosisModel> getPasienByAsuransi(Long idAsuransi) {
-        return pasienDiagnosisDB.findByPasienModelListAsuransi(idAsuransi);
-    }
+//    @Override
+//    public List<PasienDiagnosisModel> getPasienByAsuransi(Long idAsuransi) {
+//        return pasienDiagnosisDB.findByPasienModelListAsuransi(idAsuransi);
+//    }
 
     @Override
     public List<PasienDiagnosisModel> getPasienByDiagnosis(Long idDiagnosis) {

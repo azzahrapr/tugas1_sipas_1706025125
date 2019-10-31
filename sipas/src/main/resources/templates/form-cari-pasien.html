@@ -19,13 +19,13 @@
             <form th:action="@{/pasien/cari}" method="GET">
                 <div class="formDiagnosis mx-auto">
                     <select class="form-control" th:name="idDiagnosis" style="width: 20rem; padding-right: 0.5rem">
-                        <option th:value="0">-- Pilih Diagnosis --</option>
+                        <option disabled = "disabled" selected = "selected">-- Pilih Diagnosis --</option>
                         <option th:each="diagnosis: ${listDiagnosis}" th:text="${diagnosis.nama}" th:value="${diagnosis.id}"></option>
                     </select>
-                    <!--<select class="form-control" th:name="idAsuransi" style="width: 20rem ;padding-right: 0.5rem">-->
-                        <!--<option th:value="0" selected>-- Pilih Asuransi --</option>-->
-                        <!--<option th:each="asuransi1: ${listAsuransi}" th:text="${asuransi1.nama}" th:value="${asuransi1.id}"></option>-->
-                    <!--</select>-->
+                    <select class="form-control" th:name="idAsuransi" style="width: 20rem ;padding-right: 0.5rem">
+                        <option disabled = "disabled" selected = "selected">-- Pilih Asuransi --</option>
+                        <option th:each="asuransi1: ${listAsuransi}" th:text="${asuransi1.nama}" th:value="${asuransi1.id}"></option>
+                    </select>
                     <br>
                     <button type="submit" class="btn btn-primary">Cari Pasien</button>
                 </div>

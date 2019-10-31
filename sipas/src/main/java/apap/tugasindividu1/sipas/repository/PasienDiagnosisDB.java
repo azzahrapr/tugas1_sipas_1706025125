@@ -13,6 +13,5 @@ public interface PasienDiagnosisDB extends JpaRepository<PasienDiagnosisModel, L
     List<PasienDiagnosisModel> findPasienDiagnosisModelByDiagnosisPenyakitModel(DiagnosisPenyakitModel diagnosisPenyakit);
     List<PasienDiagnosisModel> findByDiagnosisPenyakitModelIdAndPasienModelJenisKelamin(Long idDiagnosis,Integer n);
     List<PasienDiagnosisModel> findByDiagnosisPenyakitModelId(Long idDiagnosis);
-    List<PasienDiagnosisModel> findByPasienModelListAsuransi(Long idAsuransi);
     List<PasienDiagnosisModel> findByPasienModelListAsuransiAndDiagnosisPenyakitModelId(Long idAsuransi, Long idDiagnosis);
 }

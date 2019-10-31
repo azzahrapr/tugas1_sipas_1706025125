@@ -19,13 +19,13 @@
             <form th:action="@{/pasien/cari}" method="GET">
                 <div class="formDiagnosis mx-auto">
                     <select class="form-control" th:name="idDiagnosis" style="width: 20rem; padding-right: 0.5rem">
-                        <option th:value="0">-- Pilih Diagnosis --</option>
+                        <option disabled = "disabled" selected = "selected">-- Pilih Diagnosis --</option>
                         <option th:each="diagnosis: ${listDiagnosis}" th:text="${diagnosis.nama}" th:value="${diagnosis.id}"></option>
                     </select>
-                    <!--<select class="form-control" th:name="idAsuransi" style="width: 20rem ;padding-right: 0.5rem">-->
-                        <!--<option th:value="0" selected>-- Pilih Asuransi --</option>-->
-                        <!--<option th:each="asuransi1: ${listAsuransi}" th:text="${asuransi1.nama}" th:value="${asuransi1.id}"></option>-->
-                    <!--</select>-->
+                    <select class="form-control" th:name="idAsuransi" style="width: 20rem ;padding-right: 0.5rem">
+                        <option disabled = "disabled" selected = "selected">-- Pilih Asuransi --</option>
+                        <option th:each="asuransi1: ${listAsuransi}" th:text="${asuransi1.nama}" th:value="${asuransi1.id}"></option>
+                    </select>
                     <br>
                     <button type="submit" class="btn btn-primary">Cari Pasien</button>
                 </div>
@@ -53,13 +53,13 @@
             <tbody>
             <tr th:each="pasienDiagnosis, iterationStatus: ${listPasien}">
                 <td th:text="${iterationStatus.count}"></td>
-                <td th:text="${pasienDiagnosis.pasienModel.nama}"></td>
-                <td th:text="${pasienDiagnosis.pasienModel.nik}"></td>
-                <td th:text="${pasienDiagnosis.pasienModel.jenisKelamin}== 1 ? 'Laki-laki' : 'Perempuan'"></td>
-                <td th:text="${pasienDiagnosis.pasienModel.kode}"></td>
-                <td th:text="${pasienDiagnosis.pasienModel.tempat_lahir}"></td>
-                <td th:text="${pasienDiagnosis.pasienModel.tgl_lahir}"></td>
-                <td th:text="${pasienDiagnosis.pasienModel.id_emergency_contact.no_hp}"></td>
+                <td th:text="${pasienDiagnosis.getNama()}"></td>
+                <td th:text="${pasienDiagnosis.getNik()}"></td>
+                <td th:text="${pasienDiagnosis.getJenisKelamin()}== 1 ? 'Laki-laki' : 'Perempuan'"></td>
+                <td th:text="${pasienDiagnosis.getKode()}"></td>
+                <td th:text="${pasienDiagnosis.getTempat_lahir()}"></td>
+                <td th:text="${pasienDiagnosis.getTgl_lahir()}"></td>
+                <td th:text="${pasienDiagnosis.getId_emergency_contact().no_hp}"></td>
             </tr>
             </tbody>
         </table>

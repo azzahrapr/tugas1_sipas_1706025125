@@ -1,6 +1,7 @@
 package apap.tugasindividu1.sipas.service;
 
 import apap.tugasindividu1.sipas.model.AsuransiModel;
+import apap.tugasindividu1.sipas.model.DiagnosisPenyakitModel;
 import apap.tugasindividu1.sipas.model.PasienDiagnosisModel;
 import apap.tugasindividu1.sipas.model.PasienModel;
 import apap.tugasindividu1.sipas.repository.EmergencyContactDB;
@@ -39,9 +40,9 @@ public class PasienServiceImpl implements PasienService {
     }
 
     @Override
-    public PasienModel changePasien(PasienModel pasienModel){
+    public PasienModel changePasien(PasienModel pasienModel) {
         PasienModel targetPasien = pasienDB.findById(pasienModel.getId()).get();
-        if (pasienModel.getTgl_lahir() != targetPasien.getTgl_lahir()){
+        if (pasienModel.getTgl_lahir() != targetPasien.getTgl_lahir()) {
             targetPasien.setTgl_lahir(pasienModel.getTgl_lahir());
             targetPasien.createKode(targetPasien);
         }
@@ -51,5 +52,15 @@ public class PasienServiceImpl implements PasienService {
         pasienDB.save(targetPasien);
         return targetPasien;
     }
+
+    @Override
+    public List<PasienModel> getPasienByAsuransi(AsuransiModel asuransiModel) {
+        return pasienDB.findByListAsuransi(asuransiModel);
+    }
+
+//    @Override
+//    public List<PasienModel> getPasienByDiagnosis(PasienDiagnosisModel pasienDiagnosisModel) {
+//        return pasienDB.findByPasienDiagnosisList(pasienDiagnosisModel);
+//    }
 
 }

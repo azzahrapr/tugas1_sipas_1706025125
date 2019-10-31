@@ -10,7 +10,7 @@ public interface PasienDiagnosisService {
     void addPasienDiagnosis(PasienDiagnosisModel pasienDiagnosisModel);
     PasienDiagnosisModel getPasienDiagnosisById(Long id);
     List<PasienDiagnosisModel> getPasienDiagnosisByDiagnosis(DiagnosisPenyakitModel diagnosisPenyakitModel);
-    public List<PasienDiagnosisModel> getPasienByAsuransi(Long idAsuransi);
+    //public List<PasienDiagnosisModel> getPasienByAsuransi(Long idAsuransi);
     public List<PasienDiagnosisModel> getPasienByDiagnosis(Long idDiagnosis);
     public List<PasienDiagnosisModel> getPasienByAsuransiAndDiagnosis(Long idAsuransi, Long idDiagnosis);
     Integer getJumlahPasienDiagnosisJenisKelamin(Integer n, Long idDiagnosis);

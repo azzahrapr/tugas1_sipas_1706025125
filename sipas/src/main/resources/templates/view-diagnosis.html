@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Data Diagnosis Penyakit</title>
@@ -43,10 +43,10 @@
             <th scope="col"></th>
             <th scope="col"></th>
         </tr>
-        <!--<tr th:each="pasien, rowStat : ${}">-->
-            <!--<td th:text="${rowStat.count}"></td>-->
-            <!--<td th:text="${pasien.nama} + ' - Kode: ' + ${pasien.kode}"></td>-->
-        <!--</tr>-->
+        <tr th:each="pasiend, rowStat : ${pasienDiagnosis}">
+            <td th:text="${rowStat.count}"></td>
+            <td th:text="${pasiend.pasienModel.nama} + ' - Kode: ' + ${pasiend.pasienModel.kode}"></td>
+        </tr>
     </table>
 </div>
 

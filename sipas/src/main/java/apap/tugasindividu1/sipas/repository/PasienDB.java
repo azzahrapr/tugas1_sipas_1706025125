@@ -12,4 +12,6 @@ import java.util.List;
 public interface PasienDB extends JpaRepository<PasienModel, Long> {
     List<PasienModel> findPasienModelById(Long id);
     PasienModel findPasienModelByNik(String nik);
+    List<PasienModel> findByListAsuransi(AsuransiModel asuransiModel);
+    List<PasienModel> findByPasienDiagnosisList(List<PasienDiagnosisModel> pasienDiagnosisModel);
 }

@@ -2,6 +2,7 @@ package apap.tugasindividu1.sipas.controller;
 
 import apap.tugasindividu1.sipas.model.*;
 import apap.tugasindividu1.sipas.service.*;
+import jdk.jshell.Diag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,7 @@ public class PasienController {
         return "home";
     }
 
-    @RequestMapping(value="/pasien/add", method = RequestMethod.POST, params= {"addRow"})
+    @RequestMapping(value="/pasien/tambah", method = RequestMethod.POST, params= {"addRow"})
     public String addRowAsuransi(@ModelAttribute PasienModel pasienModel, BindingResult bindingResult, Model model) {
         if (pasienModel.getListAsuransi() == null) {
             pasienModel.setListAsuransi(new ArrayList<AsuransiModel>());
@@ -53,7 +54,7 @@ public class PasienController {
         return "form-add-pasien";
     }
 
-    @RequestMapping(value = "/pasien/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/pasien/tambah", method = RequestMethod.GET)
     public String addPasienFormPage(Model model) {
         PasienModel pasien = new PasienModel();
         AsuransiModel asuransi = new AsuransiModel();
@@ -69,7 +70,7 @@ public class PasienController {
         return "form-add-pasien";
     }
 
-    @RequestMapping(value = "/pasien/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/pasien/tambah", method = RequestMethod.POST)
     public String addPasienSubmit (@ModelAttribute PasienModel pasien, Model model) {
         pasien.createKode(pasien);
         pasienService.addPasien(pasien);
@@ -134,72 +135,66 @@ public class PasienController {
         return "add-pasien-diagnosis";
     }
 
-//    @RequestMapping(value = "/pasien/cari",method = RequestMethod.GET)
-//    public String cariPage (Model model){
-//        List<AsuransiModel> listAsuransi = asuransiService.getAsuransiList();
-//        List<DiagnosisPenyakitModel> listPenyakit = diagnosisService.getAllDiagnosisList();
-//        model.addAttribute("listAsuransi",listAsuransi);
-//        model.addAttribute("listPenyakit",listPenyakit);
-//        return "form-cari-pasien";
-//    }
-//
-//
-//    @RequestMapping(value ="/pasien/cari",method = RequestMethod.GET,params = { "idAsuransi","idDiagnosis"})
-//    public String cariAsuransiPenyakit (
-//            @RequestParam (value = "idAsuransi") Long idAsuransi,
-//            @RequestParam(value = "idDiagnosis") Long idDiagnosis, Model model){
-//        AsuransiModel asuransi = asuransiService.getAsuransiById(idAsuransi);
-//        DiagnosisPenyakitModel diagnosis = diagnosisService.getDiagnosisById(idDiagnosis).get();
-//
-//        List<PasienDiagnosisModel> listPenyakitPasien = pasienDiagnosisService.getPasienDiagnosisByDiagnosis(diagnosis);
-//        List<PasienModel> listPasien = asuransi.getPasienList();
-//        List<PasienModel> targetPasien = new ArrayList<>();
-//
-//        for(PasienDiagnosisModel penyakitPasien : listPenyakitPasien){
-//            for(PasienModel pasien : listPasien){
-//                if(pasien.getId() == penyakitPasien.getPasienModel().getId()){
-//                    targetPasien.add(pasien);
-//                }
-//            }
-//        }
-//        List<AsuransiModel> listAsuransi = asuransiService.getAsuransiList();
-//        List<DiagnosisPenyakitModel> listPenyakit = diagnosisService.getAllDiagnosisList();
-//
-//        model.addAttribute("pasien",listPasien);
-//        model.addAttribute("listPasienDicari",targetPasien);
-//        model.addAttribute("listAsuransi",listAsuransi);
-//        model.addAttribute("listPenyakit",listPenyakit);
-//          return "cari-pasien";
-//    }
-
     @RequestMapping(path = "/pasien/cari" , method = RequestMethod.GET)
     public String cariPasienSubmit(
-                                   @RequestParam(value = "idDiagnosis", required = false) Long idDiagnosis, Model model){
+                                   @RequestParam(value = "idDiagnosis", required = false) Long idDiagnosis,
+                                   @RequestParam(value = "idAsuransi", required = false) Long idAsuransi,
+                                   Model model){
 
-        List<PasienDiagnosisModel> listPasien;
+        List<PasienModel> listPasien = new ArrayList<>();
+
         List<DiagnosisPenyakitModel> listDiagnosis = diagnosisService.getAllDiagnosisList();
         model.addAttribute("listDiagnosis", listDiagnosis);
-
         List<AsuransiModel> listAsuransi = asuransiService.getAsuransiList();
         model.addAttribute("listAsuransi", listAsuransi);
 
-        if (idDiagnosis == 0) {
-            return "form-cari-pasien";
+        AsuransiModel asuransi = null;
+        DiagnosisPenyakitModel diagnosis = null;
+
+        idAsuransi = (idAsuransi == null) ? 0 : idAsuransi;
+        idDiagnosis = (idDiagnosis == null) ? 0 : idDiagnosis;
+
+
+        if(idAsuransi != 0 && idDiagnosis != 0){
+            asuransi = asuransiService.getAsuransiById(idAsuransi);
+            diagnosis = diagnosisService.getDiagnosisById(idDiagnosis);
+            List<PasienModel> tmp = new ArrayList<>();
+            List<PasienModel> listPasienDiagnosis = new ArrayList<>();
+            for(PasienDiagnosisModel pd : pasienDiagnosisService.getPasienByDiagnosis(idDiagnosis)){
+                listPasienDiagnosis.add(pd.getPasienModel());
+            }
+            listPasien= pasienService.getPasienByAsuransi(asuransi);
+            for (PasienModel p : listPasien){
+                if (listPasienDiagnosis.contains(p)){
+                    tmp.add(p);
+                }
+            }
+            listPasien = tmp;
+            model.addAttribute("diagnosis", diagnosis);
+            model.addAttribute("listPasien", listPasien);
+            return "cari-pasien";
         }
-        listPasien = pasienDiagnosisService.getPasienByDiagnosis(idDiagnosis);
-//        if(idAsuransi == 0 && idDiagnosis== 0){
-//            return "form-cari-pasien";
-//        }
-//        if(idDiagnosis == 0) {
-//            listPasien = pasienDiagnosisService.getPasienByAsuransi(idAsuransi);
-//        }else if (idAsuransi == 0){
-//            listPasien= pasienDiagnosisService.getPasienByDiagnosis(idDiagnosis);
-//        }
-//        else {
-//            listPasien = pasienDiagnosisService.getPasienByAsuransiAndDiagnosis(idAsuransi, idDiagnosis);
-//        }
+         else if (idAsuransi == 0 && idDiagnosis != 0) {
+            diagnosis = diagnosisService.getDiagnosisById(idDiagnosis);
+            List<PasienDiagnosisModel> listPasienDiagnosis = pasienDiagnosisService.getPasienByDiagnosis(idDiagnosis);
+            for(PasienDiagnosisModel pd : listPasienDiagnosis){
+                listPasien.add(pd.getPasienModel());
+            }
+            model.addAttribute("diagnosis", diagnosis);
+            model.addAttribute("listPasien", listPasien);
+            return "cari-pasien";
+        }
+        else if (idAsuransi != 0 && idDiagnosis == 0){
+            asuransi = asuransiService.getAsuransiById(idAsuransi);
+            listPasien= pasienService.getPasienByAsuransi(asuransi);
+            model.addAttribute("asuransi", asuransi);
+            model.addAttribute("listPasien", listPasien);
+            return "cari-pasien";
+        }
+        model.addAttribute("asuransi", asuransi);
+        model.addAttribute("diagnosis", diagnosis);
         model.addAttribute("listPasien", listPasien);
-        return "cari-pasien";
+        return "form-cari-pasien";
     }
 
     @RequestMapping(path = "/pasien/cari/lakilaki-perempuan" , method = RequestMethod.GET)

@@ -2,7 +2,9 @@ package apap.tugasindividu1.sipas.controller;
 
 import apap.tugasindividu1.sipas.model.DiagnosisPenyakitModel;
 import apap.tugasindividu1.sipas.model.PasienDiagnosisModel;
+import apap.tugasindividu1.sipas.model.PasienModel;
 import apap.tugasindividu1.sipas.service.DiagnosisService;
+import apap.tugasindividu1.sipas.service.PasienDiagnosisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ public class DiagnosisController {
     @Autowired
     private DiagnosisService diagnosisService;
 
+    @Autowired
+    private PasienDiagnosisService pasienDiagnosisService;
+
     @RequestMapping(value = "/diagnosis-penyakit-all", method = RequestMethod.GET)
     public String viewAllDiagnosis(Model model){
         List<DiagnosisPenyakitModel> listDiagnosis = diagnosisService.getAllDiagnosisList();
@@ -30,7 +35,9 @@ public class DiagnosisController {
     @RequestMapping(value = "/diagnosis-penyakit", method = RequestMethod.GET)
     public String viewDiagnosis(@RequestParam(value = "idDiagnosis") Long id, Model model){
         DiagnosisPenyakitModel diagnosis = diagnosisService.getDiagnosisById(id);
+        List<PasienDiagnosisModel> pasienDiagnosis = diagnosis.getPasienDiagnosisPenyakitList();
         model.addAttribute("diagnosis", diagnosis);
+        model.addAttribute("pasienDiagnosis", pasienDiagnosis);
         return "view-diagnosis";
     }
 
