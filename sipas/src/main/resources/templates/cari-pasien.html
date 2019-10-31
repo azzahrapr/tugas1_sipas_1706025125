@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cari Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid">
+    <div class="title" style="margin-top: 60px">
+        <h2 style="align-self: center">Sistem Informasi Pasien</h2>
+    </div>
+    <div class="tabel mx-auto">
+        <h4>Masukan Asuransi dan Diagnosis</h4>
+        <div class="form">
+            <form th:action="@{/pasien/cari}" method="GET">
+                <div class="formDiagnosis mx-auto">
+                    <select class="form-control" th:name="idDiagnosis" style="width: 20rem; padding-right: 0.5rem">
+                        <option disabled = "disabled" selected = "selected">-- Pilih Diagnosis --</option>
+                        <option th:each="diagnosis: ${listDiagnosis}" th:text="${diagnosis.nama}" th:value="${diagnosis.id}"></option>
+                    </select>
+                    <select class="form-control" th:name="idAsuransi" style="width: 20rem ;padding-right: 0.5rem">
+                        <option disabled = "disabled" selected = "selected">-- Pilih Asuransi --</option>
+                        <option th:each="asuransi1: ${listAsuransi}" th:text="${asuransi1.nama}" th:value="${asuransi1.id}"></option>
+                    </select>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Cari Pasien</button>
+                </div>
+            </form>
+        </div>
+        <br>
+
+        <table class="table table-responsive-xl">
+
+            <thead class="thead-dark">
+            <tr>
+                <th colspan="8">Daftar Pasien</th>
+            </tr>
+            </thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama</th>
+                <th scope="col">NIK</th>
+                <th scope="col">Jenis Kelamin</th>
+                <th scope="col">Kode Pasien</th>
+                <th scope="col">Tempat Lahir</th>
+                <th scope="col">Tanggal Lahir</th>
+                <th scope="col">Telepon Emergency Contact</th>
+            </tr>
+            <tbody>
+            <tr th:each="pasienDiagnosis, iterationStatus: ${listPasien}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${pasienDiagnosis.getNama()}"></td>
+                <td th:text="${pasienDiagnosis.getNik()}"></td>
+                <td th:text="${pasienDiagnosis.getJenisKelamin()}== 1 ? 'Laki-laki' : 'Perempuan'"></td>
+                <td th:text="${pasienDiagnosis.getKode()}"></td>
+                <td th:text="${pasienDiagnosis.getTempat_lahir()}"></td>
+                <td th:text="${pasienDiagnosis.getTgl_lahir()}"></td>
+                <td th:text="${pasienDiagnosis.getId_emergency_contact().no_hp}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

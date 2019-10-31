@@ -1,5 +1,6 @@
 package apap.tugasindividu1.sipas.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +20,6 @@ import java.util.List;
 public class PasienModel implements Serializable{
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -39,6 +40,7 @@ public class PasienModel implements Serializable{
 
     @NotNull
     @Column(name = "tgl_lahir", nullable = false)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date tgl_lahir;
 
     @NotNull
@@ -47,26 +49,37 @@ public class PasienModel implements Serializable{
     private String tempat_lahir;
 
     @NotNull
-    @Size(max = 255)
-    @Column(name = "jenis_kelamin", nullable = false)
-    private String jenis_kelamin;
+    @Column(name = "jenisKelamin", nullable = false)
+    private Integer jenisKelamin;
+
+    public Integer getJenisKelamin() {
+        return jenisKelamin;
+    }
+
+    public void setJenisKelamin(Integer jenisKelamin) {
+        this.jenisKelamin = jenisKelamin;
+    }
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_emergency_contact", referencedColumnName = "id")
     private EmergencyContactModel id_emergency_contact;
 
     @OneToMany(mappedBy = "pasienModel")
-    private List<PasienDiagnosisModel> tgl_diagnosis;
+    private List<PasienDiagnosisModel> pasienDiagnosisList;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
+    public List<AsuransiModel> getListAsuransi() {
+        return listAsuransi;
+    }
+
+    public void setListAsuransi(List<AsuransiModel> listAsuransi) {
+        this.listAsuransi = listAsuransi;
+    }
+
+    @ManyToMany
     @JoinTable(name = "asuransi_pasien",
             joinColumns = { @JoinColumn(name = "id_pasien") },
             inverseJoinColumns = { @JoinColumn(name = "id_asuransi") })
-    private List<AsuransiModel> asuransiList;
+    private List<AsuransiModel> listAsuransi;
 
     public Long getId() {
         return id;
@@ -100,11 +113,11 @@ public class PasienModel implements Serializable{
         this.nik = nik;
     }
 
-    public Date getTglLahir() {
+    public Date getTgl_lahir() {
         return tgl_lahir;
     }
 
-    public void setTglLahir(Date tglLahir) {
+    public void setTgl_lahir(Date tgl_lahir) {
         this.tgl_lahir = tgl_lahir;
     }
 
@@ -116,48 +129,33 @@ public class PasienModel implements Serializable{
         this.tempat_lahir = tempat_lahir;
     }
 
-    public String getJenisKelamin() {
-        return jenis_kelamin;
-    }
-
-    public void setJenisKelamin(String jenis_kelamin) {
-        this.jenis_kelamin = jenis_kelamin;
-    }
-
-    public EmergencyContactModel getIdEmergencyContact() {
+    public EmergencyContactModel getId_emergency_contact() {
         return id_emergency_contact;
     }
 
-    public void setIdEmergencyContact(EmergencyContactModel idEmergencyContact) {
+    public void setId_emergency_contact(EmergencyContactModel id_emergency_contact) {
         this.id_emergency_contact = id_emergency_contact;
     }
 
-    public List<PasienDiagnosisModel> getTglDiagnosis() {
-        return tgl_diagnosis;
+    public List<PasienDiagnosisModel> getPasienDiagnosisList() {
+        return pasienDiagnosisList;
     }
 
-    public void setTglDiagnosis(List<PasienDiagnosisModel> tglDiagnosis) {
-        this.tgl_diagnosis = tgl_diagnosis;
+    public void setPasienDiagnosisList(List<PasienDiagnosisModel> pasienDiagnosisList) {
+        this.pasienDiagnosisList = pasienDiagnosisList;
     }
 
-    public List<AsuransiModel> getAsuransiList() {
-        return asuransiList;
-    }
-
-    public void setAsuransiList(List<AsuransiModel> asuransiList) {
-        this.asuransiList = asuransiList;
-    }
 
     public void createKode(PasienModel pasien) {
         if (this.tgl_lahir != pasien.tgl_lahir) {
-            Date tanggal_lahir = pasien.getTglLahir();
+            Date tanggal_lahir = pasien.getTgl_lahir();
             String pattern = "dd-MM-yy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             String strDate = simpleDateFormat.format(tanggal_lahir).replaceAll("-", "");
             String tempKode = (LocalDateTime.now().getYear() + 5) + strDate + pasien.getJenisKelamin() + RandomStringUtils.randomAlphabetic(2).toUpperCase();
             pasien.setKode(tempKode);
         }else {
-            Date tanggal_lahir = pasien.getTglLahir();
+            Date tanggal_lahir = pasien.getTgl_lahir();
             String pattern = "dd-MM-yy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             String strDate = simpleDateFormat.format(tanggal_lahir).replaceAll("-", "");
@@ -165,4 +163,6 @@ public class PasienModel implements Serializable{
             pasien.setKode(tempKode);
         }
     }
+
+
 }

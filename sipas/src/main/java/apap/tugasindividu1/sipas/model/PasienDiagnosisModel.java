@@ -12,8 +12,6 @@ import java.util.Date;
 public class PasienDiagnosisModel implements Serializable{
 
     @Id
-    @NotNull
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,6 +26,14 @@ public class PasienDiagnosisModel implements Serializable{
     @NotNull
     @Column(name = "tgl_diagnosis")
     private Date tgl_diagnosis;
+
+    public Date getTgl_diagnosis() {
+        return tgl_diagnosis;
+    }
+
+    public void setTgl_diagnosis(Date tgl_diagnosis) {
+        this.tgl_diagnosis = tgl_diagnosis;
+    }
 
     public Long getId() {
         return id;
@@ -51,13 +57,5 @@ public class PasienDiagnosisModel implements Serializable{
 
     public void setDiagnosisPenyakitModel(DiagnosisPenyakitModel diagnosisPenyakitModel) {
         this.diagnosisPenyakitModel = diagnosisPenyakitModel;
-    }
-
-    public Date getTglDiagnosis() {
-        return tgl_diagnosis;
-    }
-
-    public void setTglDiagnosis(Date tglDiagnosis) {
-        this.tgl_diagnosis = tgl_diagnosis;
     }
 }

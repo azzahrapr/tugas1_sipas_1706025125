@@ -1,6 +1,7 @@
 package apap.tugasindividu1.sipas.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -12,13 +13,10 @@ import java.io.Serializable;
 public class EmergencyContactModel implements Serializable{
 
     @Id
-    @NotNull
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Size(max = 16)
     @Column(name = "nik", nullable = false)
     private Long nik;
 
@@ -28,7 +26,6 @@ public class EmergencyContactModel implements Serializable{
     private String nama;
 
     @NotNull
-    @Size(max = 14)
     @Column(name ="no_hp", nullable = false)
     private Long no_hp;
 
@@ -43,27 +40,27 @@ public class EmergencyContactModel implements Serializable{
         this.id = id;
     }
 
-    public Long getNik() {
+    public Long getNik_contact() {
         return nik;
     }
 
-    public void setNik(Long nik) {
+    public void setNik_contact(Long nik) {
         this.nik = nik;
     }
 
-    public String getNama() {
+    public String getNama_contact() {
         return nama;
     }
 
-    public void setNama(String nama) {
+    public void setNama_contact(String nama) {
         this.nama = nama;
     }
 
-    public Long getNoHp() {
+    public Long getNo_hp() {
         return no_hp;
     }
 
-    public void setNoHp(Long noHp) {
+    public void setNo_hp(Long no_hp) {
         this.no_hp = no_hp;
     }
 

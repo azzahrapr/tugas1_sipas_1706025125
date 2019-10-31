@@ -12,7 +12,6 @@ import java.util.List;
 public class AsuransiModel implements Serializable {
 
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
@@ -26,12 +25,7 @@ public class AsuransiModel implements Serializable {
     @Column(name = "jenis", nullable = false)
     private String jenis;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "asuransiList")
+    @ManyToMany(mappedBy = "listAsuransi")
     List<PasienModel> pasienList;
 
     public Long getId() {

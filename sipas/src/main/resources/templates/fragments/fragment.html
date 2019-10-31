@@ -1,35 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
     <head th:fragment="css">
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script th:fragment="bootstrap" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     <!-- jquery, ajax, bootstrap.js-->
     <head th:fragment="js">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abt TE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4s F86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4s
+F86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script th:src="@{/js/bootstrap.min.js}"></script>
     </head>
 </head>
 <body>
 <nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">SIPAS</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle Navigation">
+    <a class="navbar-brand" href="/">SIPAS</a>
+    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"-->
+            <!--aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle Navigation">-->
+        <!--<span class="navbar-toggler-icon"></span>-->
+    <!--</button>-->
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/">Beranda<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Diagnosis Penyakit</a>
+                <a class="nav-link" href="/diagnosis-penyakit-all">Diagnosis Penyakit</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Cari Pasien</a>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cari
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" th:href="@{/pasien/cari(idAsuransi=0, idDiagnosis=0)}">Cari Pasien Asuransi & Diagnosis</a>
+                    <a class="dropdown-item" th:href="@{/pasien/cari/lakilaki-perempuan(idDiagnosis=0)}">Cari Jumlah Pasien</a>
+                </div>
             </li>
+
+            <!--<li class="nav-item dropdown">-->
+                <!--<div class="navbar-nav dropdown" >-->
+                    <!--<a href="#" class="nav-item nav-link active dropdown-toggle" data-toggle="dropdown">Cari<span class="sr-only">(current)</span></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a th:href="@{/pasien/cari(idAsuransi=0, idDiagnosis=0)}" class="nsv-item nav-link active">Cari Pasien<span class="sr-only">(current)</span></a></li>-->
+                        <!--<li><a th:href="@{/pasien/cari/lakilaki-perempuan(idDiagnosis=0)}" class="nsv-item nav-link active">Cari Pasien Pada Diagnosis<span class="sr-only">(current)</span></a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</li>-->
+
+
+
         </ul>
     </div>
 </nav>

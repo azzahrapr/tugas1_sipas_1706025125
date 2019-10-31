@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="detail mx-auto">
+    <table class="table">
+
+        <thead class="thead-dark">
+        <tr>
+            <th colspan="2">Detail Data Pasien</th>
+        </tr>
+        </thead>
+        <tr>
+            <th colspan="2">
+                <a th:href="@{/}">Kembali ke beranda</a>
+            </th>
+        </tr>
+        <tr>
+            <td>Nama</td>
+            <td th:text="${pasien.nama}"></td>
+        </tr>
+        <tr>
+            <td>NIK</td>
+            <td th:text="${pasien.nik}"></td>
+        </tr>
+        <tr>
+            <td>Kode</td>
+            <td th:text="${pasien.kode}"></td>
+        </tr>
+        <tr>
+            <td>Jenis Kelamin</td>
+            <td th:text="${pasien.jenisKelamin} == 1 ? 'Laki-laki' : 'Perempuan'"></td>
+        </tr>
+        <tr>
+            <td>Tanggal Lahir</td>
+            <td th:text="${pasien.tgl_lahir}"></td>
+        </tr>
+        <tr>
+            <td>Tempat Lahir</td>
+            <td th:text="${pasien.tempat_lahir}"></td>
+        </tr>
+        <tr>
+            <td>Emergency Contact</td>
+            <td th:text="${pasien.getId_emergency_contact().getNama_contact()} + ' - ' + ${pasien.getId_emergency_contact().getNik_contact()} + ' - ' + ${pasien.getId_emergency_contact().getNo_hp()}"></td>
+        </tr>
+
+    </table>
+</div>
+<div class="asuransi mx-auto">
+    <table class="table">
+
+        <thead class="thead-dark">
+        <tr>
+            <th colspan="2">Asuransi Milik Pasien</th>
+        </tr>
+        </thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        <tr th:each="asuransi, rowStat : ${listAsuransi}">
+            <td th:text="${rowStat.count}"></td>
+            <td th:text="${asuransi.nama}"></td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+</html>
